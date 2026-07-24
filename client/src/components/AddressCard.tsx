@@ -11,7 +11,7 @@ interface AddressCardProps {
 const AddressCard = ({ addr, onEditHandler, setAddresses }: AddressCardProps) => {
 
   const handleDelete = async (id: string) => {
-    console.log(id)
+    setAddresses((addresses) => addresses.filter((address) => address._id !== id));
   }
 
 

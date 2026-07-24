@@ -8,7 +8,7 @@ export default function AdminDeliveryPartners() {
     const [partners, setPartners] = useState<DeliveryPartner[]>([]);
     const [loading, setLoading] = useState(true);
     const [showForm, setShowForm] = useState(false);
-    const [saving, setSaving] = useState(false);
+    const [saving] = useState(false);
     const [form, setForm] = useState({ name: "", email: "", password: "", phone: "", vehicleType: "bike" });
 
     const fetchPartners = async () => {
