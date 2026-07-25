@@ -8,7 +8,8 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "dev": "nodemon --exec tsx server.ts",
-    "server": "nodemon --exec tsx server.ts"
+    "server": "nodemon --exec tsx server.ts",
+    "seed": "tsx seed.ts"
   },
   "dependencies": {
     "@prisma/adapter-neon": "^7.8.0",
