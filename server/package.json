@@ -23,6 +23,7 @@
     "jsonwebtoken": "^9.0.3",
     "multer": "^2.2.0",
     "nodemailer": "^9.0.3",
+    "stripe": "^22.3.2",
     "tsx": "^4.23.1"
   },
   "devDependencies": {

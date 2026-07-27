@@ -14,15 +14,16 @@ uploadRouter.post("/", auth, upload.single("image"), async (req, res) => {
       return res.status(400).json({ message: "No image file provided" });
     }
     const b64 = Buffer.from(req.file.buffer).toString("base64");
-    const dataURI = "data" + req.file.mimetype + ";base64" + b64;
+    const dataURI = `data:${req.file.mimetype};base64,${b64}`;
     const result = await cloudinary.uploader.upload(dataURI, {
       folder: "grocery-del",
       resource_type: "auto",
     });
     res.json({ url: result.secure_url });
   } catch (error: unknown) {
+    console.error("UPLOAD ERROR:", error); // ✅ ضيف السطر ده
     const message =
-      error instanceof Error ? error.message : "Internal server error";
+      error instanceof Error ? error.message : JSON.stringify(error); // ✅ استخدم JSON.stringify بدل الرسالة الثابتة
     res.status(500).json({ message });
   }
 });

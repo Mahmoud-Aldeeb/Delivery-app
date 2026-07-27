@@ -57,7 +57,7 @@ export const addAddress = async (req: Request, res: Response) => {
     orderBy: { createdAt: "asc" },
   });
 
-  res.status(201).json({ addAddress });
+  res.status(201).json({ addresses });
 };
 
 // Update address

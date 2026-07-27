@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { heroSectionData } from "../assets/assets";
 import { Link } from "react-router-dom";
 import { BikeIcon, Loader2Icon, LockIcon, MailIcon, UserIcon } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
   const [isLoginState, setIsLoginState] = useState(false);
@@ -10,10 +12,23 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.SubmitEvent) => {
+  const { login, register } = useAuth();
+
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => window.location.href = "/", 1000)
+    try {
+      if (isLoginState) {
+        await login(email, password)
+      } else {
+        await register(name, email, password)
+      }
+    } catch (err) {
+      const error = err as { response?: { data?: { message?: string } }; message?: string };
+      toast.error(error.response?.data?.message || error.message || "Something went wrong")
+    } finally {
+      setLoading(false);
+    }
   }
 
   return <div className="min-h-screen flex">
@@ -45,7 +60,7 @@ const Login = () => {
           </p>
         </div>
         {/* Login / Register Form */}
-        <form action="" className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-5">
           {!isLoginState && (
             <label htmlFor="name" className="text-sm flex flex-col gap-1">Name
               <div className="relative">
@@ -66,7 +81,7 @@ const Login = () => {
               <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required placeholder="...." className="w-full pl-11 pr-4 py-3 text-sm bg-white rounded-xl border not-focus:border-app-border transition-all" />
             </div>
           </label>
-          <button onClick={() => handleSubmit} type="submit" disabled={loading} className="flex-center w-full py-3 bg-green-950 text-white font-semibold rounded-xl hover:bg-green-900 transition-colors disabled:opacity-50">
+          <button type="submit" disabled={loading} className="flex-center w-full py-3 bg-green-950 text-white font-semibold rounded-xl hover:bg-green-900 transition-colors disabled:opacity-50">
             {loading ? <Loader2Icon className="animate-spin" /> : isLoginState ? "Sign In" : "Sign Up"}
           </button>
         </form>

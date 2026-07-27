@@ -51,6 +51,7 @@ export const getProducts = async (req: Request, res: Response) => {
 
 // GET /api/products/:id
 export const getProduct = async (req: Request, res: Response) => {
+  console.log("HIT getProduct", req.params.id);
   const product = await prisma.product.findUnique({
     where: { id: req.params.id as string },
   });
@@ -65,7 +66,8 @@ export const getProduct = async (req: Request, res: Response) => {
             100,
         )
       : 0;
-  return { ...product, discount };
+  console.log("HIT getProduct", req.params.id);
+  return res.status(200).json({ product: { ...product, discount } });
 };
 
 // POST /api/products
@@ -85,8 +87,9 @@ export const updateProduct = async (req: Request, res: Response) => {
 
 // DELETE /api/products/:id
 export const deleteProduct = async (req: Request, res: Response) => {
-  await prisma.product.delete({
+  await prisma.product.update({
     where: { id: req.params.id as string },
+    data: { stock: Number(0) },
   });
-  res.status(200).json({ message: "Deleted" });
+  res.status(200).json({ message: "Product Updated" });
 };
