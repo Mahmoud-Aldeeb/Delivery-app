@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { User } from "../types";
-import { data, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import api from "../config/api";
 import { toast } from "react-hot-toast";
 

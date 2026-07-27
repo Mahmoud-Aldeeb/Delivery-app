@@ -158,7 +158,7 @@ const Products = () => {
             <div className="flex-center gap-2 mt-16">
               {Array.from({ length: totalPages }).map((_, i) => (
                 <button key={i} onClick={() => { updateFilter("page", String(i + 1)); scrollTo(0, 0) }}
-                  className={`size-9 rounded-lg text-sm font-medium transition-colors ${page === i + 1 ? "bg-app-green text-white" : "bg-white text-app-text-light hover:bg-app-cream"}`}
+                  className={`size-9 rounded-lg text-sm font-medium transition-colors ${Number(page) === i + 1 ? "bg-app-green text-white" : "bg-white text-app-text-light hover:bg-app-cream"}`}
                 >
                   {i + 1}
                 </button>
